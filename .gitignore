@@ -29,6 +29,9 @@ local.properties
 .buildpath
 
 
+# gah
+.class
+
 #################
 ## Visual Studio
 #################
