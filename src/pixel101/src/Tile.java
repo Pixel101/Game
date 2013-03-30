@@ -1,5 +1,7 @@
 package pixel101.src;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -7,10 +9,12 @@ public class Tile
 {
 	public static Tile[] tileList = new Tile[255];
 	public static final Tile stone = new Tile(0).setName("stone");
+	public static final Tile grass = new Tile(1).setName("grass");
 	
 	public byte id;
 	String name;
 	Image texture;
+	boolean solid;
 	
 	public Tile(int id)
 	{
@@ -18,20 +22,34 @@ public class Tile
 		tileList[id] = this;
 	}
 	
+	
+	
 	public Tile setName(String name)
 	{
 		this.name = name;
 		return this;
 	}
 	
-	public void loadTexture() throws SlickException
+	public Tile setSolid(boolean solid)
+	{
+		this.solid = solid;
+		return this;
+	}
+	
+	
+	public void init() throws SlickException
 	{
 		texture = new Image("res/tex/tiles/" + name + ".png");
 	}
 	
-	public Image getTexture()
+	public void update(GameContainer c, int delta)
 	{
-		return texture;
+		
+	}
+	
+	public void render(GameContainer c, Graphics g, int x, int y)
+	{
+		g.drawImage(texture, x, y);
 	}
 	
 }

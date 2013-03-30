@@ -4,14 +4,12 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Main extends BasicGame
 {
-	TileRenderer tileRenderer;
-	Level level1;
+	Level currentLevel;
 	
 	public Main(String title)
 	{
@@ -22,9 +20,8 @@ public class Main extends BasicGame
 	{
 		c.setFullscreen(false);
 		
-		tileRenderer = new TileRenderer();
-		for (Tile t : Tile.tileList) if (t != null) t.loadTexture();
-		level1 = new Level();
+		for (Tile t : Tile.tileList) if (t != null) t.init();
+		currentLevel = new Level();
 	}
 
 	public void update(GameContainer c, int delta) throws SlickException
@@ -33,14 +30,12 @@ public class Main extends BasicGame
 		{
 			c.exit();
 		}
-		level1.update(c, delta);
+		currentLevel.update(c, delta);
 	}
 	
 	public void render(GameContainer c, Graphics g) throws SlickException
 	{
-		tileRenderer.render(g, level1);
-		g.drawString("Hello World - Press Space!  Input is so easy!", 20, 30);
-		g.drawString("" + c.getInput().isKeyDown(Input.KEY_SPACE), 20, 50);
+		currentLevel.render(c, g);
 	}
 
 	public static void main(String[] args)
