@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JFrame;
 
 public class Main extends Canvas
@@ -15,9 +14,11 @@ public class Main extends Canvas
 	public static Dimension screensize = new Dimension(800, 600);
 	public boolean running = true;
 	
+	Input input;
+	
 	public Main()
 	{
-		
+		input = new Input();
 	}
 	
 	public void run()
