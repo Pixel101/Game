@@ -10,41 +10,37 @@ import org.newdawn.slick.SlickException;
 
 public class Main extends BasicGame
 {
+	TileRenderer tileRenderer;
+	Level level1;
 	
-	Image temp;
-	float x = 0;
-
 	public Main(String title)
 	{
 		super(title);
 	}
 
-	public void init(GameContainer container) throws SlickException
+	public void init(GameContainer c) throws SlickException
 	{
-		container.setFullscreen(false);
-		temp = new Image("res/tex/tiles/temp.png");
+		c.setFullscreen(false);
+		
+		tileRenderer = new TileRenderer();
+		for (Tile t : Tile.tileList) if (t != null) t.loadTexture();
+		level1 = new Level();
 	}
 
-	public void update(GameContainer container, int delta) throws SlickException
+	public void update(GameContainer c, int delta) throws SlickException
 	{
-		if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
+		if (c.getInput().isKeyDown(Input.KEY_ESCAPE))
 		{
-			container.exit();
+			c.exit();
 		}
-		x += delta * 0.02;
+		level1.update(c, delta);
 	}
 	
-	public void render(GameContainer container, Graphics g) throws SlickException
+	public void render(GameContainer c, Graphics g) throws SlickException
 	{
-		for (int x = 0; x < 16; x++)
-		{
-			for (int y = 0; y < 16; y++)
-			{
-				g.drawImage(temp, this.x + (x * 16), y * 16);
-			}
-		}
+		tileRenderer.render(g, level1);
 		g.drawString("Hello World - Press Space!  Input is so easy!", 20, 30);
-		g.drawString("" + container.getInput().isKeyDown(Input.KEY_SPACE), 20, 50);
+		g.drawString("" + c.getInput().isKeyDown(Input.KEY_SPACE), 20, 50);
 	}
 
 	public static void main(String[] args)
