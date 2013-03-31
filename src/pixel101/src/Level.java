@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 public class Level
 {
@@ -13,7 +14,7 @@ public class Level
 	int width, height;
 	float camx, camy;
 	
-	public Level()
+	public Level() throws SlickException
 	{
 		camx = camy = 0;
 		width = height = 10;
@@ -35,29 +36,12 @@ public class Level
 		setTile(Tile.stone.id, 5, 5);
 		
 		entities = new ArrayList<Entity>();
-		entities.add(new Entity(this, 30, 30));
+		entities.add(new EntityPlayer(this, 30, 30));
 	}
 	
 	public void update(GameContainer c, int delta)
 	{
-		float s = 0.1f;
-		Input input = c.getInput();
-		if (input.isKeyDown(Input.KEY_W))
-		{
-			camy -= s * delta;
-		}
-		if (input.isKeyDown(Input.KEY_S))
-		{
-			camy += s * delta;
-		}
-		if (input.isKeyDown(Input.KEY_A))
-		{
-			camx -= s * delta;
-		}
-		if (input.isKeyDown(Input.KEY_D))
-		{
-			camx += s * delta;
-		}
+		
 		for (Entity e : entities) e.update(c, delta);
 	}
 	
@@ -67,19 +51,36 @@ public class Level
 		{
 			for (int y = 0; y < height; y++)
 			{
-				Tile.tileList[getTileId(x, y)].render(c, g, (int)((x * 16) - camx), (int)((y * 16) - camy));
+				Tile.tileList[getTileId(x, y)].render(c, g, (x * 16) - (int)camx, (y * 16) - (int)camy);
 			}
 		}
-		
+		for (Entity e : entities) e.render(c, g);
 	}
 	
 	public int getTileId(int x, int y)
 	{
-		return tiles[x + y * width];
+		if (insideWorld(x, y))
+		{
+			return tiles[x + y * width];
+		}
+		else
+		{
+			return Tile.stone.id;
+		}
 	}
 
 	public void setTile(int id, int x, int y)
 	{
-		tiles[x + y * width] = (byte)id;
+		if (insideWorld(x, y))
+			tiles[x + y * width] = (byte)id;
+	}
+	
+	public boolean insideWorld(int x, int y)
+	{
+		if (x < 0) return false;
+		if (x >= width) return false;
+		if (y < 0) return false;
+		if (y >= height) return false;
+		return true;
 	}
 }

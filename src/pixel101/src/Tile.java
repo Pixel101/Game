@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 public class Tile
 {
 	public static Tile[] tileList = new Tile[255];
-	public static final Tile stone = new Tile(0).setName("stone");
+	public static final Tile stone = new Tile(0).setName("stone").setSolid(true);
 	public static final Tile grass = new Tile(1).setName("grass");
 	
 	public byte id;
