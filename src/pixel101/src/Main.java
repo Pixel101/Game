@@ -19,6 +19,8 @@ public class Main extends BasicGame
 	public void init(GameContainer c) throws SlickException
 	{
 		c.setFullscreen(false);
+		c.setTargetFrameRate(100);
+		c.setVSync(true);
 		
 		for (Tile t : Tile.tileList) if (t != null) t.init();
 		currentLevel = new Level();
