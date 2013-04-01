@@ -18,7 +18,14 @@ public class Entity
 	public Entity(Level level) throws SlickException
 	{
 		this.level = level;
-		collisionRect = new Rectangle(0, 0, 14, 14);
+		if (collisionRect == null)
+		{
+			collisionRect = new Rectangle(0, 0, 1, 1);
+		}
+		//collisionRect.grow(Main.ts, Main.ts);
+		collisionRect.setWidth(collisionRect.getWidth() * Main.ts);
+		collisionRect.setHeight(collisionRect.getHeight() * Main.ts);
+		//System.out.println(collisionRect.toString());
 		spriteSheet = new Image("res/tex/ent/notex.png");
 	}
 	
@@ -36,10 +43,10 @@ public class Entity
 	
 	protected void handleCollisions()
 	{
-		int currentTileX = (int)Math.floor((x + collisionRect.getWidth() / 2) / 16);
-		int currentTileY = (int)Math.floor((y + collisionRect.getHeight() / 2) / 16);
-		int currentTileWorldX = currentTileX * 16;
-		int currentTileWorldY = currentTileY * 16;
+		int currentTileX = (int)Math.floor((x + collisionRect.getWidth() / 2) / Main.ts);
+		int currentTileY = (int)Math.floor((y + collisionRect.getHeight() / 2) / Main.ts);
+		int currentTileWorldX = currentTileX * Main.ts;
+		int currentTileWorldY = currentTileY * Main.ts;
 		float tx = x, ty = y;
 		//System.out.println(currentTileX + ",  " + currentTileY + ",    " + currentTileWorldX + ",  " + currentTileWorldY);
 		if (x < currentTileWorldX)
@@ -56,11 +63,11 @@ public class Entity
 				//walking on
 			}
 		}
-		else if (x + collisionRect.getWidth() >= currentTileWorldX + 16)
+		else if (x + collisionRect.getWidth() >= currentTileWorldX + Main.ts)
 		{
 			if (Tile.tileList[level.getTileId(currentTileX + 1, (int)Math.floor(y / 16))].solid)
 			{
-				tx = currentTileWorldX + 16 - 1 - collisionRect.getWidth();
+				tx = currentTileWorldX + Main.ts - 1 - collisionRect.getWidth();
 				//collision
 			}
 			else
@@ -70,7 +77,7 @@ public class Entity
 		}
 		if (y < currentTileWorldY)
 		{
-			if (Tile.tileList[level.getTileId((int)Math.floor(x / 16), currentTileY - 1)].solid)
+			if (Tile.tileList[level.getTileId((int)Math.floor(x / Main.ts), currentTileY - 1)].solid)
 			{
 				ty = currentTileWorldY;
 				//collision
@@ -80,11 +87,11 @@ public class Entity
 				//walking on
 			}
 		}
-		else if (y + collisionRect.getHeight() >= currentTileWorldY + 16)
+		else if (y + collisionRect.getHeight() >= currentTileWorldY + Main.ts)
 		{
-			if (Tile.tileList[level.getTileId((int)Math.floor(x / 16), currentTileY + 1)].solid)
+			if (Tile.tileList[level.getTileId((int)Math.floor(x / Main.ts), currentTileY + 1)].solid)
 			{
-				ty = currentTileWorldY + 16 - 1 - collisionRect.getHeight();
+				ty = currentTileWorldY + Main.ts - 1 - collisionRect.getHeight();
 				//collision
 			}
 			else
@@ -98,7 +105,7 @@ public class Entity
 	
 	public void render(GameContainer c, Graphics g)
 	{
-		g.drawImage(spriteSheet, x - level.camx, y - level.camy);
+		g.drawImage(spriteSheet, x - level.camx, y - level.camy, x - level.camx + Main.ts, y - level.camy + Main.ts, 0, 0, spriteSheet.getWidth(), spriteSheet.getHeight());
 		g.setColor(Color.white);
 		g.drawRect(x - level.camx + collisionRect.getX(), y - level.camy + collisionRect.getY(), collisionRect.getWidth(), collisionRect.getHeight());
 	}

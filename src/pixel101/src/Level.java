@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Level
@@ -17,7 +16,7 @@ public class Level
 	public Level() throws SlickException
 	{
 		camx = camy = 0;
-		width = height = 10;
+		width = height = 32;
 		tiles = new byte[width * height];
 		for (int x = 0; x < width; x++)
 		{
@@ -37,6 +36,7 @@ public class Level
 		
 		entities = new ArrayList<Entity>();
 		entities.add(new EntityPlayer(this, 30, 30));
+		entities.add(new EntityBat(this, 123, 123));
 	}
 	
 	public void update(GameContainer c, int delta)
@@ -51,7 +51,7 @@ public class Level
 		{
 			for (int y = 0; y < height; y++)
 			{
-				Tile.tileList[getTileId(x, y)].render(c, g, (x * 16) - (int)camx, (y * 16) - (int)camy);
+				Tile.tileList[getTileId(x, y)].render(c, g, (x * Main.ts) - (int)camx, (y * Main.ts) - (int)camy);
 			}
 		}
 		for (Entity e : entities) e.render(c, g);

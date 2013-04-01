@@ -49,7 +49,7 @@ public class Tile
 	
 	public void render(GameContainer c, Graphics g, int x, int y)
 	{
-		g.drawImage(texture, x, y);
+		g.drawImage(texture, x, y, x + Main.ts, y + Main.ts, 0, 0, texture.getWidth(), texture.getHeight());
 	}
 	
 }
