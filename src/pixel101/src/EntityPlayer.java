@@ -6,9 +6,11 @@ import org.newdawn.slick.SlickException;
 
 public class EntityPlayer extends Entity
 {
-	public EntityPlayer(Level level, float x, float y) throws SlickException
+	public EntityPlayer(Main main, float x, float y)
 	{
-		super(level, x, y);
+		super(main, x, y);
+		width = 14;
+		height = 14;
 	}
 	
 	public void update(GameContainer c, int delta)
@@ -32,9 +34,9 @@ public class EntityPlayer extends Entity
 			x += s * delta;
 		}
 		super.handleCollisions();
-		level.camx = x + collisionRect.getWidth() / 2 - c.getWidth() / 2;
-		level.camy = y + collisionRect.getHeight() / 2 - c.getHeight() / 2;
-		//System.out.println(level.camx + ",  " + level.camy);
+		main.camx = x + width / 2 - c.getWidth() / 2;
+		main.camy = y + height / 2 - c.getHeight() / 2;
+		//System.out.println(main.camx + ",  " + main.camy);
 	}
 
 }
