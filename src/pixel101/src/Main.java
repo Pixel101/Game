@@ -26,6 +26,7 @@ public class Main extends BasicGame
 	boolean[][] solid;
 	public float camx, camy;
 	public ArrayList<Entity> entities = new ArrayList<Entity>();
+	public EntityPlayer player;
 	public static Map nameToEntity;
 	
 	public Main(String title)
@@ -37,7 +38,7 @@ public class Main extends BasicGame
 
 	public void init(GameContainer c) throws SlickException
 	{
-		loadMap("map2", 0);
+		loadMap("map1", 0);
 		//entities.add(new EntityPlayer(this, 30, 30));
 		//entities.add(new EntityBat(this, 120, 120));
 	}
@@ -49,12 +50,15 @@ public class Main extends BasicGame
 			c.exit();
 		}
 		for (Entity e : entities) e.update(c, delta);
+		player.update(c, delta);
 	}
 	
 	public void render(GameContainer c, Graphics g) throws SlickException
 	{
+		//g.scale(2, 2);
 		map.render(-(int)camx, -(int)camy);
 		for (Entity e : entities) e.render(c, g);
+		player.render(c, g);
 		//g.drawString("" + entities.get(0).x, 30, 50);
 		g.setColor(Color.blue);
 		g.fillRect(map.getObjectX(0, 0) * map.getTileWidth() - camx, map.getObjectY(0, 0) * map.getTileHeight() - camy, map.getObjectWidth(0, 0) * map.getTileWidth(), map.getObjectHeight(0, 0) * map.getTileHeight());
@@ -63,6 +67,7 @@ public class Main extends BasicGame
 	
 	public void loadMap(String mapName, int playerSpawn)
 	{
+		entities.clear();
 		try
 		{
 			map = new TiledMapPlus("res/maps/" + mapName + ".tmx");
@@ -117,11 +122,13 @@ public class Main extends BasicGame
 						if (Integer.parseInt(s1) == playerSpawn)
 						{
 							//spawn player
-							entities.add(new EntityPlayer(this, obj.x, obj.y));
+							//entities.add(new EntityPlayer(this, obj.x, obj.y));
+							player = new EntityPlayer(this, obj.x, obj.y);
 						}
 						if (s2 != null)
 						{
 							//add map loading point
+							entities.add(new EntityMapLoader(this, obj.x, obj.y, s2.split(",")[0], Integer.parseInt(s2.split(",")[1])));
 						}
 						break;
 					}
@@ -133,6 +140,7 @@ public class Main extends BasicGame
 			}
 		}
 	}
+	
 	
 	
 	public static void main(String[] args)

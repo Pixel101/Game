@@ -15,15 +15,27 @@
  </tileset>
  <layer name="Tile Layer 1" width="10" height="10">
   <data encoding="base64" compression="zlib">
-   eJxzZGBgcCQSM6JhdDFqqHNEY2NTh08fserw+Q2XGKX2EoMBdf8L5Q==
+   eJxzZGBgcMSBGbHwkTG6GDXUEWMvPn3EqsPmV3zmEXIvMfYSgwEY/wul
   </data>
  </layer>
- <layer name="Entity Layer 1" width="10" height="10">
-  <properties>
-   <property name="entityData" value="6,1,bat,5,7,bat"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFgwkAAAGQAAE=
-  </data>
- </layer>
+ <objectgroup name="Object Layer 1" width="10" height="10">
+  <object x="112" y="-16" width="16" height="16">
+   <properties>
+    <property name="map" value="map2,1"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+  <object x="32" y="32" width="16" height="16">
+   <properties>
+    <property name="spawn" value="0"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+  <object x="112" y="32" width="16" height="16">
+   <properties>
+    <property name="spawn" value="1"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

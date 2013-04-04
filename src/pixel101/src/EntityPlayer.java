@@ -3,6 +3,7 @@ package pixel101.src;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 public class EntityPlayer extends Entity
 {
@@ -36,6 +37,17 @@ public class EntityPlayer extends Entity
 		super.handleCollisions();
 		main.camx = x + width / 2 - c.getWidth() / 2;
 		main.camy = y + height / 2 - c.getHeight() / 2;
+		for (Entity e : main.entities)
+		{
+			if (e instanceof EntityMapLoader)
+			{
+				if (new Rectangle(e.x, e.y, e.width, e.height).intersects(new Rectangle(main.player.x, main.player.y, main.player.width, main.player.height)))
+				{
+					((EntityMapLoader)e).loadMap();
+					return;
+				}
+			}
+		}
 		//System.out.println(main.camx + ",  " + main.camy);
 	}
 
