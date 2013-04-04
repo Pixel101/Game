@@ -101,7 +101,7 @@ public class Entity
 	public void render(GameContainer c, Graphics g)
 	{
 		g.drawImage(anim.getCurrentFrame(),
-					x - main.camx, y - main.camy, x - main.camx + width, y - main.camy + height,
+					x, y, x + width, y + height,
 					0, 0, anim.getWidth(), anim.getHeight());
 	}
 }

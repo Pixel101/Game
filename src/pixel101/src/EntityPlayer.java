@@ -35,8 +35,14 @@ public class EntityPlayer extends Entity
 			x += s * delta;
 		}
 		super.handleCollisions();
-		main.camx = x + width / 2 - c.getWidth() / 2;
-		main.camy = y + height / 2 - c.getHeight() / 2;
+		main.camx = x + width / 2 - (c.getWidth() / 2) / 2;
+		main.camy = y + height / 2 - (c.getHeight() / 2) / 2;
+		if (main.camx < 0) main.camx = 0;
+		else if (main.camx> main.map.getWidth() * main.map.getTileWidth() - c.getWidth() / main.scale) main.camx = main.map.getWidth() * main.map.getTileWidth() - c.getWidth() / main.scale;
+		if (main.camy < 0) main.camy = 0;
+		else if (main.camy > main.map.getHeight() * main.map.getTileHeight() - c.getHeight() / main.scale) main.camy = main.map.getHeight() * main.map.getTileHeight() - c.getHeight() / main.scale;
+		//System.out.println(main.map.getWidth() + ",  " + main.map.getTileWidth() + ",  " + c.getWidth());
+		//System.out.println(main.camx + ", " + main.camy);
 		for (Entity e : main.entities)
 		{
 			if (e instanceof EntityMapLoader)

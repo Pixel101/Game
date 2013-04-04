@@ -23,6 +23,7 @@ public class Main extends BasicGame
 	TiledMapPlus map;
 	boolean[][] solid;
 	public float camx, camy;
+	public int scale = 2;
 	public ArrayList<Entity> entities = new ArrayList<Entity>();
 	public EntityPlayer player;
 	public static Map nameToEntity;
@@ -36,9 +37,7 @@ public class Main extends BasicGame
 
 	public void init(GameContainer c) throws SlickException
 	{
-		loadMap("mapJANUS", 0);
-		//entities.add(new EntityPlayer(this, 30, 30));
-		//entities.add(new EntityBat(this, 120, 120));
+		loadMap("mapwobbly", 0);
 	}
 
 	public void update(GameContainer c, int delta) throws SlickException
@@ -53,13 +52,11 @@ public class Main extends BasicGame
 	
 	public void render(GameContainer c, Graphics g) throws SlickException
 	{
-		//g.scale(2, 2);
-		map.render(-(int)camx, -(int)camy);
+		g.scale(scale, scale);
+		g.translate(-camx, -camy);
+		map.render(0, 0);
 		for (Entity e : entities) e.render(c, g);
 		player.render(c, g);
-		//g.drawString("" + entities.get(0).x, 30, 50);
-		g.setColor(Color.blue);
-		g.fillRect(map.getObjectX(0, 0) * map.getTileWidth() - camx, map.getObjectY(0, 0) * map.getTileHeight() - camy, map.getObjectWidth(0, 0) * map.getTileWidth(), map.getObjectHeight(0, 0) * map.getTileHeight());
 	}
 	
 	

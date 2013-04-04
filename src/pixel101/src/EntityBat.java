@@ -48,7 +48,7 @@ public class EntityBat extends Entity
 	public void render(GameContainer c, Graphics g)
 	{
 		//super.render(c, g);
-		a.draw(x - main.camx, y - main.camy);
+		a.draw(x, y);
 //		for (int i = 0; i < asdf.length; i++)
 //		{
 //			g.setColor(Color.white);
