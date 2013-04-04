@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="16" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="floor" tilewidth="16" tileheight="16">
+  <image source="../tex/tilesets/floor.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="65" name="solid" tilewidth="16" tileheight="16">
+  <image source="../tex/tilesets/solid.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJy1k7EOwjAMRNN0gk4tU2ECpsIEfEH//6fwkJOs09mtkBiehIj90pyTtZSybtDtqNnqB5V+e39PtV3g4LWDcTSGoE5RyeMdlfyjMRkn0Y++jIEce/wAa8zVuBn31jcbZ+Mi8vnFv7R5PIM+7/d78wwj/8t4G58d/mx+3o9MkAv+V3NT/r6t+xrvX9rao+Wi/PBE35/5kQlyifzq+6twZ/lPwu/v8lDid+zfCmafgTs50p7w+vfg66Jz8xnBTHtG94f9KrdoXip/PoN6i5kn8/6bL2mnIjQ=
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="24" height="16">
+  <object x="32" y="208" width="16" height="16">
+   <properties>
+    <property name="name" value="bat"/>
+    <property name="type" value="entity"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object x="208" y="128" width="16" height="16">
+   <properties>
+    <property name="spawn" value="0"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+  <object x="144" y="0" width="16" height="16">
+   <properties>
+    <property name="spawn" value="1"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+  <object x="144" y="-16" width="16" height="16">
+   <properties>
+    <property name="map" value="map2,1"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
