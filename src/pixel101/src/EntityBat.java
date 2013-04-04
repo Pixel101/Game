@@ -1,7 +1,6 @@
 package pixel101.src;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -16,14 +15,13 @@ public class EntityBat extends Entity
 	public EntityBat(Main main, float x, float y)
 	{
 		super(main, x, y);
-		width = 12; height = 6;
+		pos.setSize(8, 5);
 		try
 		{
 			a = new Animation(new SpriteSheet(new Image("res/tex/ent/bat.png"), 16, 10), 10);
 		}
 		catch (SlickException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		a.addFrame(100, 0, 0);
@@ -39,16 +37,15 @@ public class EntityBat extends Entity
 		{
 			asdf[i] += (Main.r.nextInt(2000) - 1000) * delta * 0.001;
 			if (asdf[i] < 0) asdf[i] += 360; else if (asdf[i] >= 360) asdf[i] -= 360;
-			x += Math.cos(Math.toRadians(asdf[i])) * ((a - b) + Main.r.nextFloat() * b * 2) * delta;
-			y += Math.sin(Math.toRadians(asdf[i])) * ((a - b) + Main.r.nextFloat() * b * 2) * delta;
+			move((float)Math.cos(Math.toRadians(asdf[i])) * ((a - b) + Main.r.nextFloat() * b * 2) * delta,
+				 (float)Math.sin(Math.toRadians(asdf[i])) * ((a - b) + Main.r.nextFloat() * b * 2) * delta);
 		}
 		super.handleCollisions();
 	}
 	
 	public void render(GameContainer c, Graphics g)
 	{
-		//super.render(c, g);
-		a.draw(x, y);
+		super.render(c, g);
 //		for (int i = 0; i < asdf.length; i++)
 //		{
 //			g.setColor(Color.white);

@@ -13,13 +13,12 @@ public class EntityMapLoader extends Entity
 		super(main, x, y);
 		this.map = map;
 		this.spawn = spawn;
-		width = main.map.getTileWidth();
-		height = main.map.getTileHeight();
+		pos.setSize(main.map.getTileWidth(), main.map.getTileHeight());
 	}
 	
-	public void loadMap()
+	public void loadMap(GameContainer c)
 	{
-		main.loadMap(map, spawn);
+		main.loadMap(c, map, spawn);
 	}
 	
 	public void update(GameContainer c, int delta)

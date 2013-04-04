@@ -8,7 +8,6 @@ import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -26,18 +25,18 @@ public class Main extends BasicGame
 	public int scale = 2;
 	public ArrayList<Entity> entities = new ArrayList<Entity>();
 	public EntityPlayer player;
-	public static Map nameToEntity;
+	public static Map<String, Class<?>> nameToEntity;
 	
 	public Main(String title)
 	{
 		super(title);
-		nameToEntity = new HashMap();
+		nameToEntity = new HashMap<String, Class<?>>();
 		nameToEntity.put("bat", EntityBat.class);
 	}
 
 	public void init(GameContainer c) throws SlickException
 	{
-		loadMap("mapwobbly", 0);
+		loadMap(c, "mapwobbly", 0);
 	}
 
 	public void update(GameContainer c, int delta) throws SlickException
@@ -60,7 +59,7 @@ public class Main extends BasicGame
 	}
 	
 	
-	public void loadMap(String mapName, int playerSpawn)
+	public void loadMap(GameContainer cont, String mapName, int playerSpawn)
 	{
 		entities.clear();
 		try
@@ -84,8 +83,7 @@ public class Main extends BasicGame
 				solid[x][y] = id > 64 && id <= 128;
 			}
 		}
-		//System.out.println(map.getObjectGroup("Object Layer 1").getObjects().size());
-		Class c;
+		Class<?> c;
 		String s1, s2;
 		for (ObjectGroup group : map.getObjectGroups())
 		{
@@ -97,7 +95,7 @@ public class Main extends BasicGame
 					{
 						s1 = obj.props.getProperty("name");
 						if (s1 == null) continue;
-						c = (Class)nameToEntity.get(s1);
+						c = (Class<?>)nameToEntity.get(s1);
 						try
 						{
 							entities.add((Entity)c.getConstructor(new Class[] {Main.class, float.class, float.class}).newInstance(new Object[] {this, obj.x, obj.y}));
@@ -106,7 +104,8 @@ public class Main extends BasicGame
 								| IllegalArgumentException | InvocationTargetException
 								| NoSuchMethodException | SecurityException e)
 						{
-							e.printStackTrace();
+							//e.printStackTrace();
+							e.getCause().printStackTrace();
 						}
 						break;
 					}
@@ -118,21 +117,18 @@ public class Main extends BasicGame
 						{
 							if (Integer.parseInt(s1) == playerSpawn)
 							{
-								//spawn player
-								//entities.add(new EntityPlayer(this, obj.x, obj.y));
-								player = new EntityPlayer(this, obj.x, obj.y);
+								player = new EntityPlayer(this, obj.x, obj.y, cont);
 							}
 						}
 						if (s2 != null)
 						{
-							//add map loading point
 							entities.add(new EntityMapLoader(this, obj.x, obj.y, s2.split(",")[0], Integer.parseInt(s2.split(",")[1])));
 						}
 						break;
 					}
 					default:
 					{
-						
+						System.out.println("Object not coded yet: " + obj.toString());
 					}
 				}
 			}

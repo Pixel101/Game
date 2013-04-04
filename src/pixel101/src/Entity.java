@@ -1,62 +1,43 @@
 package pixel101.src;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Transform;
 
 public class Entity
 {
 	Main main;
-	public float x, y;
-	float width = 0, height = 0;
+	public Rectangle pos;
 	Animation anim;
 	
 	public Entity(Main main)
 	{
 		this.main = main;
-		if (width == 0 && height == 0)
-		{
-			width = main.map.getTileWidth();
-			height = main.map.getTileHeight();
-		}
-		//System.out.println(collisionRect.toString());
-		try
-		{
-			anim = new Animation();
-			anim.addFrame(new Image("res/tex/ent/notex.png"), 1);
-		}
-		catch (SlickException e)
-		{
-			e.printStackTrace();
-		}
+		pos = new Rectangle(0, 0, 0, 0);
 	}
 	
 	public Entity(Main main, float x, float y)
 	{
 		this(main);
-		this.x = x;
-		this.y = y;
+		this.pos.setLocation(x, y);
 	}
 	
 	public void update(GameContainer c, int delta)
 	{
-		handleCollisions(); 
+		
 	}
 	
 	protected void handleCollisions()
 	{
 		int tw = main.map.getTileWidth();
 		int th = main.map.getTileHeight();
-		int tx = (int)((x + width / 2) / tw);
-		int ty = (int)((y + height / 2) / th);
+		int tx = (int)(pos.getCenterX() / tw);
+		int ty = (int)(pos.getCenterY() / th);
 		float mx, my;
 		boolean s;
 		Rectangle r = new Rectangle(0, 0, tw, th);
-		Rectangle er;
 		for (int lx = tx - 1; lx <= tx + 1; lx++)
 		{
 			for (int ly = ty - 1; ly <= ty + 1; ly++)
@@ -74,23 +55,22 @@ public class Entity
 					r.setX(lx * tw);
 					r.setY(ly * th);
 					r = new Rectangle(lx * tw, ly * th, tw, th);
-					er = new Rectangle(x, y, width, height);
-					if (r.intersects(er))
+					if (r.intersects(pos))
 					{
 						//System.out.println(System.currentTimeMillis());
-						float left = Math.abs(er.getMinX() - r.getMaxX());
-			            float right = (er.getMaxX() - r.getMinX());
-			            float top = Math.abs(er.getMinY() - r.getMaxY());
-			            float bottom = (er.getMaxY() - r.getMinY());
+						float left = Math.abs(pos.getMinX() - r.getMaxX());
+			            float right = (pos.getMaxX() - r.getMinX());
+			            float top = Math.abs(pos.getMinY() - r.getMaxY());
+			            float bottom = (pos.getMaxY() - r.getMinY());
 			            if (left < right) mx = left; else mx = -right;
 			            if (top < bottom) my = top; else my = -bottom;
 			            if (Math.abs(mx) < Math.abs(my))
 			            {
-			            	x += mx;
+			            	move(mx, 0);
 			            }
 			            else
 			            {
-			            	y += my;
+			            	move(0, my);
 			            }
 					}
 				}
@@ -98,10 +78,17 @@ public class Entity
 		}
 	}
 	
+	public void move(float x, float y)
+	{
+		pos.setX(pos.getX() + x);
+		pos.setY(pos.getY() + y);
+	}
+	
 	public void render(GameContainer c, Graphics g)
 	{
-		g.drawImage(anim.getCurrentFrame(),
-					x, y, x + width, y + height,
-					0, 0, anim.getWidth(), anim.getHeight());
+		if (anim != null)
+			g.drawImage(anim.getCurrentFrame(),
+						pos.getX(), pos.getY(), pos.getMaxX(), pos.getMaxY(),
+						0, 0, anim.getWidth(), anim.getHeight());
 	}
 }
