@@ -3,5 +3,5 @@
  <properties>
   <property name="solid" value="true"/>
  </properties>
- <image source="../tex/tilesets/solid.png" width="128" height="128"/>
+ <image source="solid.png" width="128" height="128"/>
 </tileset>
