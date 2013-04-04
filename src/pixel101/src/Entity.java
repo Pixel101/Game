@@ -9,29 +9,35 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Entity
 {
-	Level level;
+	Main main;
 	public float x, y;
-	Rectangle collisionRect;
+	float width = 0, height = 0;
 	Image spriteSheet;
 	
 	
-	public Entity(Level level) throws SlickException
+	public Entity(Main main)
 	{
-		this.level = level;
-		if (collisionRect == null)
+		this.main = main;
+		if (width == 0 && height == 0)
 		{
-			collisionRect = new Rectangle(0, 0, 1, 1);
+			width = main.map.getTileWidth();
+			height = main.map.getTileHeight();
 		}
-		//collisionRect.grow(Main.ts, Main.ts);
-		collisionRect.setWidth(collisionRect.getWidth() * Main.ts);
-		collisionRect.setHeight(collisionRect.getHeight() * Main.ts);
 		//System.out.println(collisionRect.toString());
-		spriteSheet = new Image("res/tex/ent/notex.png");
+		try
+		{
+			spriteSheet = new Image("res/tex/ent/notex.png");
+		}
+		catch (SlickException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public Entity(Level level, float x, float y) throws SlickException
+	public Entity(Main main, float x, float y)
 	{
-		this(level);
+		this(main);
 		this.x = x;
 		this.y = y;
 	}
@@ -43,70 +49,59 @@ public class Entity
 	
 	protected void handleCollisions()
 	{
-		int currentTileX = (int)Math.floor((x + collisionRect.getWidth() / 2) / Main.ts);
-		int currentTileY = (int)Math.floor((y + collisionRect.getHeight() / 2) / Main.ts);
-		int currentTileWorldX = currentTileX * Main.ts;
-		int currentTileWorldY = currentTileY * Main.ts;
-		float tx = x, ty = y;
-		//System.out.println(currentTileX + ",  " + currentTileY + ",    " + currentTileWorldX + ",  " + currentTileWorldY);
-		if (x < currentTileWorldX)
+		int tw = main.map.getTileWidth();
+		int th = main.map.getTileHeight();
+		int tx = (int)((x + width / 2) / tw);
+		int ty = (int)((y + height / 2) / th);
+		float mx, my;
+		boolean s;
+		Rectangle r = new Rectangle(0, 0, tw, th);
+		Rectangle er;
+		for (int lx = tx - 1; lx <= tx + 1; lx++)
 		{
-			if (Tile.tileList[level.getTileId(currentTileX - 1, currentTileY)].solid ||
-				y < currentTileWorldY && Tile.tileList[level.getTileId(currentTileX, currentTileY - 1)].solid ||
-				y >= currentTileWorldY + 1 && Tile.tileList[level.getTileId(currentTileX, currentTileY + 1)].solid)
+			for (int ly = ty - 1; ly <= ty + 1; ly++)
 			{
-				tx = currentTileWorldX;
-				//collision
-			}
-			else
-			{
-				//walking on
+				if (lx < 0 || lx >= main.solid.length || ly < 0 || ly >= main.solid[0].length)
+				{
+					s = true;
+				}
+				else
+				{
+					s = main.solid[lx][ly];
+				}
+				if (s)
+				{
+					r.setX(lx * tw);
+					r.setY(ly * th);
+					r = new Rectangle(lx * tw, ly * th, tw, th);
+					er = new Rectangle(x, y, width, height);
+					if (r.intersects(er))
+					{
+						//System.out.println(System.currentTimeMillis());
+						float left = Math.abs(er.getMinX() - r.getMaxX());
+			            float right = (er.getMaxX() - r.getMinX());
+			            float top = Math.abs(er.getMinY() - r.getMaxY());
+			            float bottom = (er.getMaxY() - r.getMinY());
+			            if (left < right) mx = left; else mx = -right;
+			            if (top < bottom) my = top; else my = -bottom;
+			            if (Math.abs(mx) < Math.abs(my))
+			            {
+			            	x += mx;
+			            }
+			            else
+			            {
+			            	y += my;
+			            }
+					}
+				}
 			}
 		}
-		else if (x + collisionRect.getWidth() >= currentTileWorldX + Main.ts)
-		{
-			if (Tile.tileList[level.getTileId(currentTileX + 1, (int)Math.floor(y / 16))].solid)
-			{
-				tx = currentTileWorldX + Main.ts - 1 - collisionRect.getWidth();
-				//collision
-			}
-			else
-			{
-				//walking on
-			}
-		}
-		if (y < currentTileWorldY)
-		{
-			if (Tile.tileList[level.getTileId((int)Math.floor(x / Main.ts), currentTileY - 1)].solid)
-			{
-				ty = currentTileWorldY;
-				//collision
-			}
-			else
-			{
-				//walking on
-			}
-		}
-		else if (y + collisionRect.getHeight() >= currentTileWorldY + Main.ts)
-		{
-			if (Tile.tileList[level.getTileId((int)Math.floor(x / Main.ts), currentTileY + 1)].solid)
-			{
-				ty = currentTileWorldY + Main.ts - 1 - collisionRect.getHeight();
-				//collision
-			}
-			else
-			{
-				//walking on
-			}
-		}
-		x = tx;
-		y = ty;
 	}
 	
 	public void render(GameContainer c, Graphics g)
 	{
-		g.drawImage(spriteSheet, x - level.camx, y - level.camy, x - level.camx + Main.ts, y - level.camy + Main.ts, 0, 0, spriteSheet.getWidth(), spriteSheet.getHeight());
+		g.drawImage(spriteSheet, x - main.camx, y - main.camy, x - main.camx + width, y - main.camy + height, 0, 0, spriteSheet.getWidth(), spriteSheet.getHeight());
 		g.setColor(Color.white);
-		g.drawRect(x - level.camx + collisionRect.getX(), y - level.camy + collisionRect.getY(), collisionRect.getWidth(), collisionRect.getHeight());
+		g.drawRect(x - main.camx, y - main.camy, width, height);
 	}
 }
