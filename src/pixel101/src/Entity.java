@@ -1,5 +1,6 @@
 package pixel101.src;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,8 +13,7 @@ public class Entity
 	Main main;
 	public float x, y;
 	float width = 0, height = 0;
-	Image spriteSheet;
-	
+	Animation anim;
 	
 	public Entity(Main main)
 	{
@@ -26,11 +26,11 @@ public class Entity
 		//System.out.println(collisionRect.toString());
 		try
 		{
-			spriteSheet = new Image("res/tex/ent/notex.png");
+			anim = new Animation();
+			anim.addFrame(new Image("res/tex/ent/notex.png"), 1);
 		}
 		catch (SlickException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -44,7 +44,7 @@ public class Entity
 	
 	public void update(GameContainer c, int delta)
 	{
-		handleCollisions();
+		handleCollisions(); 
 	}
 	
 	protected void handleCollisions()
@@ -63,7 +63,7 @@ public class Entity
 			{
 				if (lx < 0 || lx >= main.solid.length || ly < 0 || ly >= main.solid[0].length)
 				{
-					s = false;
+					s = !(this instanceof EntityPlayer);
 				}
 				else
 				{
@@ -100,8 +100,8 @@ public class Entity
 	
 	public void render(GameContainer c, Graphics g)
 	{
-		g.drawImage(spriteSheet, x - main.camx, y - main.camy, x - main.camx + width, y - main.camy + height, 0, 0, spriteSheet.getWidth(), spriteSheet.getHeight());
-		g.setColor(Color.white);
-		g.drawRect(x - main.camx, y - main.camy, width, height);
+		g.drawImage(anim.getCurrentFrame(),
+					x - main.camx, y - main.camy, x - main.camx + width, y - main.camy + height,
+					0, 0, anim.getWidth(), anim.getHeight());
 	}
 }

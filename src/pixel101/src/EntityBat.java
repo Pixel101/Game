@@ -13,7 +13,7 @@ public class EntityBat extends Entity
 	Animation a;
 	float[] asdf = {0, 90, 180, 270};
 	
-	public EntityBat(Main main, int x, int y)
+	public EntityBat(Main main, float x, float y)
 	{
 		super(main, x, y);
 		width = 12; height = 6;

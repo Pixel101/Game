@@ -2,31 +2,19 @@
 <map version="1.0" orientation="orthogonal" width="16" height="16" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="Floor" tilewidth="16" tileheight="16">
   <image source="../tex/tilesets/floor.png" width="128" height="128"/>
-  <terraintypes>
-   <terrain name="Dirt Patch" tile="-1"/>
-  </terraintypes>
-  <tile id="8" terrain=",,,0"/>
-  <tile id="9" terrain=",,0,0"/>
-  <tile id="10" terrain=",,0,"/>
-  <tile id="16" terrain=",0,,0"/>
-  <tile id="17" terrain="0,0,0,0"/>
-  <tile id="18" terrain="0,,0,"/>
-  <tile id="24" terrain=",0,,"/>
-  <tile id="25" terrain="0,0,,"/>
-  <tile id="26" terrain="0,,,"/>
  </tileset>
- <tileset firstgid="65" name="decoration" tilewidth="16" tileheight="16">
-  <image source="../tex/tilesets/decoration.png" width="128" height="128"/>
- </tileset>
- <tileset firstgid="129" name="solid" tilewidth="16" tileheight="16">
+ <tileset firstgid="65" name="solid" tilewidth="16" tileheight="16">
   <properties>
    <property name="solid" value="true"/>
   </properties>
   <image source="../tex/tilesets/solid.png" width="128" height="128"/>
  </tileset>
+ <tileset firstgid="129" name="decoration" tilewidth="16" tileheight="16">
+  <image source="../tex/tilesets/decoration.png" width="128" height="128"/>
+ </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJy9kDESgCAMBEM6pVIq5bX83GuuixEJQ7ENmeWSayLSgqRBZvpqzK23nvwN7CB//PfmH+AExclWx7/ADWqgP+7KW0h28q2+eAspnflRXyfls0tSf/qj/a/0IzxgeiFL
+   eJxzZGBgcKQQM5KJqamfCYs8NjFi7OcEYi4g5iZgHi79gkAsBMTCeOxmwqNfEoilgFiagvCDuRXmFxjmxmM/tvCC+QWGhYm0n1L9TFSyHxaWMCxNon5yw5+e+inBAEC4Eks=
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="16" height="16">

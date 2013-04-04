@@ -15,7 +15,6 @@ public class EntityMapLoader extends Entity
 		this.spawn = spawn;
 		width = main.map.getTileWidth();
 		height = main.map.getTileHeight();
-		spriteSheet = null;
 	}
 	
 	public void loadMap()

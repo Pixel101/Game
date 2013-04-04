@@ -15,8 +15,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.GroupObject;
 import org.newdawn.slick.tiled.ObjectGroup;
-import org.newdawn.slick.tiled.TileSet;
-import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.tiled.TiledMapPlus;
 
 public class Main extends BasicGame
@@ -38,7 +36,7 @@ public class Main extends BasicGame
 
 	public void init(GameContainer c) throws SlickException
 	{
-		loadMap("map1", 0);
+		loadMap("mapJANUS", 0);
 		//entities.add(new EntityPlayer(this, 30, 30));
 		//entities.add(new EntityBat(this, 120, 120));
 	}
@@ -105,7 +103,7 @@ public class Main extends BasicGame
 						c = (Class)nameToEntity.get(s1);
 						try
 						{
-							entities.add((Entity)c.getConstructor(new Class[] {Main.class, int.class, int.class}).newInstance(new Object[] {this, obj.x, obj.y}));
+							entities.add((Entity)c.getConstructor(new Class[] {Main.class, float.class, float.class}).newInstance(new Object[] {this, obj.x, obj.y}));
 						}
 						catch (InstantiationException | IllegalAccessException
 								| IllegalArgumentException | InvocationTargetException
@@ -119,11 +117,14 @@ public class Main extends BasicGame
 					{
 						s1 = obj.props.getProperty("spawn");
 						s2 = obj.props.getProperty("map");
-						if (Integer.parseInt(s1) == playerSpawn)
+						if (s1 != null)
 						{
-							//spawn player
-							//entities.add(new EntityPlayer(this, obj.x, obj.y));
-							player = new EntityPlayer(this, obj.x, obj.y);
+							if (Integer.parseInt(s1) == playerSpawn)
+							{
+								//spawn player
+								//entities.add(new EntityPlayer(this, obj.x, obj.y));
+								player = new EntityPlayer(this, obj.x, obj.y);
+							}
 						}
 						if (s2 != null)
 						{

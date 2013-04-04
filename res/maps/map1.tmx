@@ -15,7 +15,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="10" height="10">
   <data encoding="base64" compression="zlib">
-   eJxzZGBgcMSBGbHwkTG6GDXUEWMvPn3EqsPmV3zmEXIvMfYSgwEY/wul
+   eJxzZGBgcMSBGbHwkTG6GDZ1TESqQxdHt5cJi3pC9qLrwWW+I5oebOY5YjGbkPvQ1RGDAR7nC7A=
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="10" height="10">
@@ -31,7 +31,7 @@
     <property name="type" value="player"/>
    </properties>
   </object>
-  <object x="112" y="32" width="16" height="16">
+  <object x="112" y="0" width="16" height="16">
    <properties>
     <property name="spawn" value="1"/>
     <property name="type" value="player"/>
