@@ -63,7 +63,7 @@ public class Entity
 			{
 				if (lx < 0 || lx >= main.solid.length || ly < 0 || ly >= main.solid[0].length)
 				{
-					s = true;
+					s = false;
 				}
 				else
 				{

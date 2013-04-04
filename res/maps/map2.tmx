@@ -11,7 +11,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJztkVEKACAIQ+1o3v9S/Yakic0M6mMEZr7mmIi4SG1T3hk8nCiu9KHV0Fyvzyy/cq61i0yu1b/LjewY7Vebz5P+U9yMfD21bL+a0PlG//kaV/K1bFD5rN5H7z73Lm6FOpXsLhk=
+   eJztkVEKACAIQ+1o3v9S/YZkiW0V1McIzHzNqYjoIZVFRWdoc6K41odXQ3OjPll+7dzRLpjcUf8qN7NjtF9vvnb6d3EZ+UZqbL+e0Plm//ka1/K9bFD5zN5n7z73Li5bPVYFkOwt2Q==
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="30" height="20">
@@ -32,6 +32,18 @@
   <object x="32" y="32" width="16" height="16">
    <properties>
     <property name="spawn" value="0"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+  <object x="400" y="320" width="16" height="16">
+   <properties>
+    <property name="map" value="map1,1"/>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+  <object x="400" y="288" width="16" height="16">
+   <properties>
+    <property name="spawn" value="1"/>
     <property name="type" value="player"/>
    </properties>
   </object>
