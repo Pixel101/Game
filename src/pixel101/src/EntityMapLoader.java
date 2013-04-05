@@ -10,10 +10,10 @@ public class EntityMapLoader extends Entity
 	
 	public EntityMapLoader(Main main, float x, float y, String map, int spawn)
 	{
-		super(main, x, y);
+		super(main, x + 3, y + 3);
 		this.map = map;
 		this.spawn = spawn;
-		pos.setSize(main.map.getTileWidth(), main.map.getTileHeight());
+		pos.setSize(main.map.getTileWidth() - 6, main.map.getTileHeight() - 6);
 	}
 	
 	public void loadMap(GameContainer c)

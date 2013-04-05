@@ -13,7 +13,12 @@
  </tileset>
  <layer name="Tile Layer 1" width="24" height="16">
   <data encoding="base64" compression="zlib">
-   eJy1k7EOwjAMRNN0gk4tU2ECpsIEfEH//6fwkJOs09mtkBiehIj90pyTtZSybtDtqNnqB5V+e39PtV3g4LWDcTSGoE5RyeMdlfyjMRkn0Y++jIEce/wAa8zVuBn31jcbZ+Mi8vnFv7R5PIM+7/d78wwj/8t4G58d/mx+3o9MkAv+V3NT/r6t+xrvX9rao+Wi/PBE35/5kQlyifzq+6twZ/lPwu/v8lDid+zfCmafgTs50p7w+vfg66Jz8xnBTHtG94f9KrdoXip/PoN6i5kn8/6bL2mnIjQ=
+   eJy1kzEOwjAMRSN1gkyFqTABU9sJOEHufyn+0C9ZVr4TKhjeksTPjp2UlFJpsHScacUrrH8Q+8rBvQM4gtzIFdVQc9A/ghM4V2IZF5GFo8fPPc8N3MFji5vABVx/5J+3eawizvptbj9D5X+CF3h3+KPZWT97wr5wvddfe3/WP5v1NfAPwt+qnz1hX76tv+VX0G/fck76H9u/wtlH8E2OLqf3FndO3VsxuZyqP3v9qv/+DrW/uNf7bz6cQjsX
+  </data>
+ </layer>
+ <layer name="decoration" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgYwDRA9hILcLlvsLt7FBAGhOJwsMYxMe4arG7HB2jtZnLiG11suIY9AEWIABs=
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="24" height="16">

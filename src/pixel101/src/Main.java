@@ -37,6 +37,21 @@ public class Main extends BasicGame
 	public void init(GameContainer c) throws SlickException
 	{
 		loadMap(c, "mapwobbly", 0);
+		Class<?> cl;
+		for (int i = 0; i < nameToEntity.size(); i++)
+		{
+			cl = (Class<?>)nameToEntity.values().toArray()[i];
+			try
+			{
+				cl.getMethod("init", new Class<?>[] {GameContainer.class}).invoke(null, c);
+			}
+			catch (IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException
+					| SecurityException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void update(GameContainer c, int delta) throws SlickException
@@ -117,7 +132,8 @@ public class Main extends BasicGame
 						{
 							if (Integer.parseInt(s1) == playerSpawn)
 							{
-								player = new EntityPlayer(this, obj.x, obj.y, cont);
+								if (player == null) player = new EntityPlayer(this, obj.x, obj.y, cont);
+								else player.pos.setLocation(obj.x, obj.y);
 							}
 						}
 						if (s2 != null)

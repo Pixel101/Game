@@ -9,12 +9,14 @@
   </properties>
   <image source="../tex/tilesets/solid.png" width="128" height="128"/>
  </tileset>
- <tileset firstgid="129" name="decoration" tilewidth="16" tileheight="16">
-  <image source="../tex/tilesets/decoration.png" width="128" height="128"/>
- </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJxzZGBgcKQQM5KJqamfCYs8NjFi7OcEYi4g5iZgHi79gkAsBMTCeOxmwqNfEoilgFiagvCDuRXmFxjmxmM/tvCC+QWGhYm0n1L9TFSyHxaWMCxNon5yw5+e+inBAEC4Eks=
+   eJxzZGBgcKQQa5GJB6t+TiDmAmJuMvULArEQEAuTqV8SiKWAWJoK/of5BYa5SdQP8wsMCw8x/bCwhGFpEvUPhfRLCQYAAZcsNQ==
+  </data>
+ </layer>
+ <layer name="decoration" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgcgIlIcSY8aim1jxrmkmPvYADUdNdg9SMhQIq7iVE7FMIUADy4ABs=
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="16" height="16">
