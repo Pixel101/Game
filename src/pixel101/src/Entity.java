@@ -4,13 +4,12 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Transform;
 
 public class Entity
 {
 	Main main;
 	public Rectangle pos;
-	Animation anim;
+	static Animation anim;
 	
 	public Entity(Main main)
 	{
@@ -22,6 +21,11 @@ public class Entity
 	{
 		this(main);
 		this.pos.setLocation(x, y);
+	}
+	
+	public static void init(GameContainer c)
+	{
+		
 	}
 	
 	public void update(GameContainer c, int delta)
@@ -84,11 +88,36 @@ public class Entity
 		pos.setY(pos.getY() + y);
 	}
 	
+	public void move(float amount, byte direction)
+	{
+		switch (direction)
+		{
+			case 0:
+			{
+				move(amount, 0);
+				break;
+			}
+			case 1:
+			{
+				move(0, -amount);
+				break;
+			}
+			case 2:
+			{
+				move(-amount, 0);
+				break;
+			}
+			case 3:
+			{
+				move(0, amount);
+				break;
+			}
+		}
+	}
+	
 	public void render(GameContainer c, Graphics g)
 	{
 		if (anim != null)
-			g.drawImage(anim.getCurrentFrame(),
-						pos.getX(), pos.getY(), pos.getMaxX(), pos.getMaxY(),
-						0, 0, anim.getWidth(), anim.getHeight());
+			anim.draw(pos.getX(), pos.getY(), pos.getWidth(), pos.getHeight());
 	}
 }

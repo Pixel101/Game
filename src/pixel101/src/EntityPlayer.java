@@ -1,5 +1,7 @@
 package pixel101.src;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,10 +12,7 @@ import org.newdawn.slick.SpriteSheet;
 public class EntityPlayer extends Entity
 {
 	SpriteSheet spriteSheet;
-	Animation walk_up;
-	Animation walk_down;
-	Animation walk_left;
-	Animation walk_right;
+	Animation[] anim_walk;
 	byte direction, prevdirection;
 	boolean walking;
 	
@@ -30,10 +29,11 @@ public class EntityPlayer extends Entity
 			e.printStackTrace();
 		}
 		int d = 100;
-		(walk_down = new Animation(spriteSheet, new int[] {0, 0, 1, 0, 0, 0, 2, 0}, new int[] {d, d, d, d})).setAutoUpdate(false);
-		(walk_up = new Animation(spriteSheet, new int[] {0, 1, 1, 1, 0, 1, 2, 1}, new int[] {d, d, d, d})).setAutoUpdate(false);
-		(walk_right = new Animation(spriteSheet, new int[] {0, 2, 1, 2, 0, 2, 2, 2}, new int[] {d, d, d, d})).setAutoUpdate(false);
-		(walk_left = new Animation(spriteSheet, new int[] {0, 3, 1, 3, 0, 3, 2, 3}, new int[] {d, d, d, d})).setAutoUpdate(false);
+		anim_walk = new Animation[4];
+		(anim_walk[3] = new Animation(spriteSheet, new int[] {0, 0, 1, 0, 0, 0, 2, 0}, new int[] {d, d, d, d})).setAutoUpdate(false);
+		(anim_walk[1] = new Animation(spriteSheet, new int[] {0, 1, 1, 1, 0, 1, 2, 1}, new int[] {d, d, d, d})).setAutoUpdate(false);
+		(anim_walk[0] = new Animation(spriteSheet, new int[] {0, 2, 1, 2, 0, 2, 2, 2}, new int[] {d, d, d, d})).setAutoUpdate(false);
+		(anim_walk[2] = new Animation(spriteSheet, new int[] {0, 3, 1, 3, 0, 3, 2, 3}, new int[] {d, d, d, d})).setAutoUpdate(false);
 	}
 	
 	public void update(GameContainer c, int delta)
@@ -45,7 +45,7 @@ public class EntityPlayer extends Entity
 		{
 			if (e instanceof EntityMapLoader)
 			{
-				if (pos.intersects(e.pos))
+				if (e.pos.intersects(pos))
 				{
 					((EntityMapLoader)e).loadMap(c);
 					return;
@@ -54,109 +54,27 @@ public class EntityPlayer extends Entity
 		}
 	}
 	
+	ArrayList<Byte> dirs = new ArrayList<Byte>();
 	void handleMovement(GameContainer c, int delta)
 	{
-		final float s = 0.08f;
+		final float s = 0.06f;
 		Input input = c.getInput();
-		if (input.isKeyPressed(Input.KEY_W))
+		if (input.isKeyPressed(Input.KEY_W)) { dirs.add((byte) 1); anim_walk[1].setCurrentFrame(1); }
+		if (input.isKeyPressed(Input.KEY_S)) { dirs.add((byte) 3); anim_walk[3].setCurrentFrame(1); }
+		if (input.isKeyPressed(Input.KEY_A)) { dirs.add((byte) 2); anim_walk[2].setCurrentFrame(1); }
+		if (input.isKeyPressed(Input.KEY_D)) { dirs.add((byte) 0); anim_walk[0].setCurrentFrame(1); }
+		if (!input.isKeyDown(Input.KEY_W)) { dirs.remove(Byte.valueOf((byte)1)); anim_walk[1].setCurrentFrame(0); }
+		if (!input.isKeyDown(Input.KEY_S)) { dirs.remove(Byte.valueOf((byte)3)); anim_walk[3].setCurrentFrame(0); }
+		if (!input.isKeyDown(Input.KEY_A)) { dirs.remove(Byte.valueOf((byte)2)); anim_walk[2].setCurrentFrame(0); }
+		if (!input.isKeyDown(Input.KEY_D)) { dirs.remove(Byte.valueOf((byte)0)); anim_walk[0].setCurrentFrame(0); }
+		if (dirs.size() > 0)
 		{
-			direction = 1;
-			walking = true;
-			walk_up.setCurrentFrame(1);
+			direction = dirs.get(dirs.size() - 1);
+			move(s * delta, direction);
+			anim_walk[direction].update(delta);
 		}
-		if (input.isKeyPressed(Input.KEY_S))
-		{
-			direction = 3;
-			walking = true;
-			walk_down.setCurrentFrame(1);
-		}
-		if (input.isKeyPressed(Input.KEY_A))
-		{
-			direction = 2;
-			walking = true;
-			walk_left.setCurrentFrame(1);
-		}
-		if (input.isKeyPressed(Input.KEY_D))
-		{
-			direction = 0;
-			walking = true;
-			walk_right.setCurrentFrame(1);
-		}
-		if (walking)
-		{
-			switch (direction)
-			{
-				case 0:
-				{
-					if (!input.isKeyDown(Input.KEY_D))
-					{
-						walking = false;
-						walk_right.setCurrentFrame(0);
-					}
-					break;
-				}
-				case 1:
-				{
-					if (!input.isKeyDown(Input.KEY_W))
-					{
-						walking = false;
-						walk_up.setCurrentFrame(0);
-					}
-					break;
-				}
-				case 2:
-				{
-					if (!input.isKeyDown(Input.KEY_A))
-					{
-						walking = false;
-						walk_left.setCurrentFrame(0);
-					}
-					break;
-				}
-				case 3:
-				{
-					if (!input.isKeyDown(Input.KEY_S))
-					{
-						walking = false;
-						walk_down.setCurrentFrame(0);
-					}
-					break;
-				}
-			}
-		}
-		if (walking)
-		{
-			switch (direction)
-			{
-				case 0:
-				{
-					move(s * delta, 0);
-					walk_right.update(delta);
-					break;
-				}
-				case 1:
-				{
-					move(0, -s * delta);
-					walk_up.update(delta);
-					break;
-				}
-				case 2:
-				{
-					move(-s * delta, 0);
-					walk_left.update(delta);
-					break;
-				}
-				case 3:
-				{
-					move(0, s * delta);
-					walk_down.update(delta);
-					break;
-				}
-			}
-		}
-		prevdirection = direction;
 	}
-
+	
 	void moveCamera(GameContainer c)
 	{
 		main.camx = pos.getCenterX() - (c.getWidth() / 2) / main.scale;
@@ -173,33 +91,8 @@ public class EntityPlayer extends Entity
 	public void render(GameContainer c, Graphics g)
 	{
 		//anim.draw(x - (16 - width), y - (24 - height), 16, 24);
-		Animation animToDraw = null;
-		switch (direction)
-		{
-			case 0:
-			{
-				animToDraw = walk_right;
-				break;
-			}
-			case 1:
-			{
-				animToDraw = walk_up;
-				break;
-			}
-			case 2:
-			{
-				animToDraw = walk_left;
-				break;
-			}
-			case 3:
-			{
-				animToDraw = walk_down;
-				break;
-			}
-		}
-		if (animToDraw != null)
-			animToDraw.draw(pos.getX() - (animToDraw.getWidth() - pos.getWidth()) / 2,
-							pos.getY() - (animToDraw.getHeight() - pos.getHeight()),
-							animToDraw.getWidth(), animToDraw.getHeight());
+		anim_walk[direction].draw(pos.getCenterX() - anim_walk[direction].getWidth() / 2,
+						pos.getMaxY() - anim_walk[direction].getHeight(),
+						anim_walk[direction].getWidth(), anim_walk[direction].getHeight());
 	}
 }

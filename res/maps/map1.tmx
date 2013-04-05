@@ -15,7 +15,12 @@
  </tileset>
  <layer name="Tile Layer 1" width="10" height="10">
   <data encoding="base64" compression="zlib">
-   eJxzZGBgcMSBGbHwkTG6GDZ1TESqQxdHt5cJi3pC9qLrwWW+I5oebOY5YjGbkPvQ1RGDAR7nC7A=
+   eJxzZGBgcMSBtbDwkTG6GDXUEWMvPn3EqsPmV3zmEXIvMfYSgwEccBR0
+  </data>
+ </layer>
+ <layer name="decoration" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAdMNFJDza9uNjUsIeQ3aTYwUSmWwAPyAAV
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="10" height="10">
