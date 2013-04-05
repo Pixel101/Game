@@ -32,6 +32,7 @@ local.properties
 *.class
 *.project
 *.classpath
+*.tsx
 
 #################
 ## Visual Studio
