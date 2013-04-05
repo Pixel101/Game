@@ -30,6 +30,8 @@ local.properties
 
 # gah
 *.class
+*.project
+*.classpath
 
 #################
 ## Visual Studio
