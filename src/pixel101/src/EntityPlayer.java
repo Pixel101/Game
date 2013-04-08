@@ -11,15 +11,19 @@ import org.newdawn.slick.SpriteSheet;
 
 public class EntityPlayer extends Entity
 {
-	SpriteSheet spriteSheet;
-	Animation[] anim_walk;
+	static SpriteSheet spriteSheet;
+	static Animation[] anim_walk;
 	byte direction, prevdirection;
 	boolean walking;
 	
-	public EntityPlayer(Main main, float x, float y, GameContainer c)
+	public EntityPlayer(Game game, float x, float y, GameContainer c)
 	{
-		super(main, x, y);
+		super(game, x, y);
 		pos.setSize(14, 14);
+	}
+	
+	public static void init(GameContainer c)
+	{
 		try
 		{
 			spriteSheet = new SpriteSheet("res/tex/ent/player.png", 16, 24);
@@ -41,7 +45,7 @@ public class EntityPlayer extends Entity
 		handleMovement(c, delta);
 		handleCollisions();
 		moveCamera(c);
-		for (Entity e : main.entities)
+		for (Entity e : game.entities)
 		{
 			if (e instanceof EntityMapLoader)
 			{
@@ -77,14 +81,14 @@ public class EntityPlayer extends Entity
 	
 	void moveCamera(GameContainer c)
 	{
-		main.camx = pos.getCenterX() - (c.getWidth() / 2) / main.scale;
-		main.camy = pos.getCenterY() - (c.getHeight() / 2) / main.scale;
-		if (main.camx < 0) main.camx = 0;
-		else if (main.camx> main.map.getWidth() * main.map.getTileWidth() - c.getWidth() / main.scale)
-			main.camx = main.map.getWidth() * main.map.getTileWidth() - c.getWidth() / main.scale;
-		if (main.camy < 0) main.camy = 0;
-		else if (main.camy > main.map.getHeight() * main.map.getTileHeight() - c.getHeight() / main.scale)
-			main.camy = main.map.getHeight() * main.map.getTileHeight() - c.getHeight() / main.scale;
+		game.camx = pos.getCenterX() - (c.getWidth() / 2) / game.scale;
+		game.camy = pos.getCenterY() - (c.getHeight() / 2) / game.scale;
+		if (game.camx < 0) game.camx = 0;
+		else if (game.camx> game.map.getWidth() * game.map.getTileWidth() - c.getWidth() / game.scale)
+			game.camx = game.map.getWidth() * game.map.getTileWidth() - c.getWidth() / game.scale;
+		if (game.camy < 0) game.camy = 0;
+		else if (game.camy > game.map.getHeight() * game.map.getTileHeight() - c.getHeight() / game.scale)
+			game.camy = game.map.getHeight() * game.map.getTileHeight() - c.getHeight() / game.scale;
 		
 	}
 	

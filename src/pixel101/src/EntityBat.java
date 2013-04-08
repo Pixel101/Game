@@ -12,9 +12,9 @@ public class EntityBat extends Entity
 {
 	float[] asdf = {0, 90, 180, 270};
 	
-	public EntityBat(Main main, float x, float y)
+	public EntityBat(Game game, float x, float y)
 	{
-		super(main, x, y);
+		super(game, x, y);
 		pos.setSize(8, 5);
 	}
 	

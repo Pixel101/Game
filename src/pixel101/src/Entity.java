@@ -7,19 +7,19 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Entity
 {
-	Main main;
+	Game game;
 	public Rectangle pos;
 	static Animation anim;
 	
-	public Entity(Main main)
+	public Entity(Game game)
 	{
-		this.main = main;
+		this.game = game;
 		pos = new Rectangle(0, 0, 0, 0);
 	}
 	
-	public Entity(Main main, float x, float y)
+	public Entity(Game game, float x, float y)
 	{
-		this(main);
+		this(game);
 		this.pos.setLocation(x, y);
 	}
 	
@@ -35,8 +35,8 @@ public class Entity
 	
 	protected void handleCollisions()
 	{
-		int tw = main.map.getTileWidth();
-		int th = main.map.getTileHeight();
+		int tw = game.map.getTileWidth();
+		int th = game.map.getTileHeight();
 		int tx = (int)(pos.getCenterX() / tw);
 		int ty = (int)(pos.getCenterY() / th);
 		float mx, my;
@@ -46,13 +46,13 @@ public class Entity
 		{
 			for (int ly = ty - 1; ly <= ty + 1; ly++)
 			{
-				if (lx < 0 || lx >= main.solid.length || ly < 0 || ly >= main.solid[0].length)
+				if (lx < 0 || lx >= game.solid.length || ly < 0 || ly >= game.solid[0].length)
 				{
 					s = !(this instanceof EntityPlayer);
 				}
 				else
 				{
-					s = main.solid[lx][ly];
+					s = game.solid[lx][ly];
 				}
 				if (s)
 				{
